@@ -209,11 +209,11 @@ def coding_strand_to_AA(dna):
     """
     chain = []
     y = 0
-    for y in range(0, len(dna), 3):
+    for y in range(0, len(dna)-2, 3):
         codons = dna[y: (y+3)]
         new_aa = aa_table[codons]
         chain.append(new_aa)
-    return chain
+    return ''.join(chain)
 
 
 coding_strand_to_AA("ATGCGA")
@@ -229,7 +229,7 @@ def gene_finder(dna):
     threshold = longest_ORF_noncoding(dna, 1500)
     openORF = find_all_ORFs_both_strands(dna)
     for i in openORF:
-        if len(i) < len(threshold):
+        if len(i) >= len(threshold):
             aa = coding_strand_to_AA(i)
             amino.append(aa)
     return aa
